@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Drawing.Diagrams;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Framework.XamlTypes;
 using SportsStore.Models;
 using SportsStore.Models.ViewModels;
 using System;
@@ -32,7 +34,10 @@ namespace SportsStore.Controllers
              {
                  CurrentPage = productPage,
                  ItemsPerPage = PageSize,
-                 TotalItems = repository.Products.Count()
+                 TotalItems = Category == null ?
+                    repository.Products.Count() :
+                    repository.Products.Where(e =>
+                        e.Category == Category).Count()
              },
              CurrentCategory = Category
          });
